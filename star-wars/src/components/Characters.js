@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes, Navigate, Link } from "react-router-dom";
 import Character from "./Character";
+import { useParams } from "react-router-dom";
 
 const getCharacters = async (url) => {
   const response = await fetch(url, {
@@ -10,6 +11,7 @@ const getCharacters = async (url) => {
   return await response.json();
 };
 export default function Characters() {
+  const { id } = useParams();
   const [characters, setCharacters] = useState([]);
   useEffect(() => {
     getCharacters("http://localhost:3000/api/characters").then((characters) =>

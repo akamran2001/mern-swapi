@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const getCharacter = async (url) => {
   const response = await fetch(url, {
@@ -9,6 +10,7 @@ const getCharacter = async (url) => {
 };
 
 export default function Character(props) {
+  const { id } = useParams();
   const [character, setCharacter] = useState([]);
   useEffect(() => {
     getCharacter(`http://localhost:3000/api/characters/${props.id}`).then(

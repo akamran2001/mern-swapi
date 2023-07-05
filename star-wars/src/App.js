@@ -17,12 +17,12 @@ function App() {
         <Films></Films>
         <Film film_id={3}></Film>
       </header>
-<nav>
+      <nav>
         <Link to="/characters">Characters</Link>
       </nav>
       <Routes>
         <Route path="/characters" element={<Characters />} />
-        <Route path="/character/:_id" element={<Character id={_id} />} />
+        <Route path="/character/:_id" element={<Character id={1} />} />
       </Routes>
     </div>
   );
