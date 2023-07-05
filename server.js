@@ -143,8 +143,8 @@ app.get("/api/planets/:id", (req, res) => {
   });
 });
 
-// DELETE a character
-app.delete("/api/characters/:id", (req, res) => {
+// DELETE a planet
+app.delete("/api/planets/:id", (req, res) => {
   planet_dao.deletePlanet(req.params.id, (ok) => {
     if (!ok) {
       res.status(404).end();
@@ -154,8 +154,8 @@ app.delete("/api/characters/:id", (req, res) => {
   });
 });
 
-// PUT a character
-app.put("/api/characters/:id", (req, res) => {
+// PUT a planet
+app.put("/api/planets/:id", (req, res) => {
   planet_dao.updatePlanet(req.params.id, req.body, (ok) => {
     if (!ok) {
       res.status(404).end();
@@ -165,8 +165,8 @@ app.put("/api/characters/:id", (req, res) => {
   });
 });
 
-// POST a character
-app.post("/api/characters", (req, res) => {
+// POST a planet
+app.post("/api/planets", (req, res) => {
   planet_dao.addPlanet(req.body, (ok) => {
     if (!ok) {
       res.status(500).end();
