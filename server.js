@@ -1,5 +1,10 @@
 const express = require("express");
 const cors = require("cors");
+const app = express();
+
+// Middleware
+app.use(express.json()); //Parse json
+app.use(cors());
 
 //Data access objects
 const film_dao = require("./dao/film_access");
@@ -8,10 +13,6 @@ const planet_dao = require("./dao/planet_access");
 const films_planets_dao = require("./dao/films_planets_access");
 const films_characters_dao = require("./dao/films_characters_access");
 
-const app = express();
-
-app.use(express.json()); //Parse json
-app.use(cors());
 
 // Get all films
 app.get("/api/films", (req, res) => {

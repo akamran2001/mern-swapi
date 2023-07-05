@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes, Navigate, Link } from "react-router-dom";
-
-import logo from "./logo.svg";
 import "./App.css";
 import Characters from "./components/Characters";
 import Character from "./components/Character";
+import Planets from "./Planets";
+import Planet from "./Planet";
+import Films from "./Films";
+import Film from "./Film";
 
 function App() {
   return (
     <div className="App">
-      <nav>
+      <header className="App-header">
+        <Planets></Planets>
+        <Planet planet_id={3}></Planet>
+        <Films></Films>
+        <Film film_id={3}></Film>
+      </header>
+<nav>
         <Link to="/characters">Characters</Link>
       </nav>
       <Routes>
