@@ -14,20 +14,34 @@ async function startup() {
 }
 startup();
 
-//retreive all books
-module.exports.findAllFilmCharacters = function (callback) {
-  //let dataPromise = collection.find({}).toArray();
-  //dataPromise.then((books) => callback(books));
+//GET all character for a film
+module.exports.findAllFilmCharacters = (film_id, callback) => {
+  let dataPromise = collection.find({ film_id: parseInt(film_id) }).toArray();
+  dataPromise.then((character_id) => callback(character_id));
 };
 
-// retrieve a single book
-module.exports.findFilmCharacter = function (isbn, callback) {
-  //let dataPromise = collection.findOne({ isbn: isbn });
-  //dataPromise.then((book) => callback(book));
+// GET all films for a character
+module.exports.findAllCharacterFilms = (character_id, callback) => {
+  let dataPromise = collection
+    .find({ character_id: parseInt(character_id) })
+    .toArray();
+  dataPromise.then((film_id) => callback(film_id));
 };
 
-// delete a single book
-module.exports.deleteFilmCharacter = function (isbn, callback) {
-  //let dataPromise = collection.deleteOne({ isbn: isbn });
-  //dataPromise.then((ok) => callback(ok));
+//POST a character <=> film association
+module.exports.addFilmCharacter = (film_id, character, callback) => {
+  let dataPromise = collection.insertOne({
+    character_id: parseInt(character.id),
+    film_id: parseInt(film_id),
+  });
+  dataPromise.then((ok) => callback(ok));
+};
+
+//POST a character <=> film association
+module.exports.addCharacterFilm = (character_id, film, callback) => {
+  let dataPromise = collection.insertOne({
+    character_id: parseInt(character_id),
+    film_id: parseInt(film.id),
+  });
+  dataPromise.then((ok) => callback(ok));
 };
