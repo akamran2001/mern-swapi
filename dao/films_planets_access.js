@@ -14,20 +14,17 @@ async function startup() {
 }
 startup();
 
-//retreive all books
-module.exports.findAllFilmPlanets = function (callback) {
-  //let dataPromise = collection.find({}).toArray();
-  //dataPromise.then((books) => callback(books));
+//retreive all film_planets
+module.exports.findAllFilmPlanets = function (film_id, callback) {
+  let dataPromise = collection.find({ film_id: parseInt(film_id) }).toArray();
+  dataPromise.then((films_planets) => callback(films_planets));
 };
 
-// retrieve a single book
-module.exports.findFilmPLanet = function (isbn, callback) {
-  //let dataPromise = collection.findOne({ isbn: isbn });
-  //dataPromise.then((book) => callback(book));
-};
-
-// delete a single book
-module.exports.deleteFilmPlanet = function (isbn, callback) {
-  //let dataPromise = collection.deleteOne({ isbn: isbn });
-  //dataPromise.then((ok) => callback(ok));
+// Post a film_planet
+module.exports.addFilmPlanet = (film_id, film_planet, callback) => {
+  let dataPromise = collection.insertOne({
+    film_id: parseInt(film_id),
+    planet_id: film_planet.planet_id,
+  });
+  dataPromise.then((ok) => callback(ok));
 };

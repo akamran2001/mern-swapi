@@ -4,7 +4,7 @@ const express = require("express");
 const film_dao = require("./dao/film_access");
 const character_dao = require("./dao/character_access");
 const planet_dao = require("./dao/planet_access");
-// const films_planets_dao = require("dao/films_planets");
+const films_planets_dao = require("./dao/films_planets_access");
 // const films_characters_dao = require("dao/films_characters");
 
 const app = express();
@@ -175,6 +175,35 @@ app.post("/api/planets", (req, res) => {
     }
   });
 });
+
+// Films's planets
+app
+  .route("/api/films/:id/planets")
+  .get((req, res) => {
+    /*
+     * Respond with planet IDs
+     */
+    films_planets_dao.findAllFilmPlanets(req.params.id, (films_planets) => {
+      if (!films_planets) {
+        res.status(404).end();
+      } else {
+        films_planets = films_planets.map((item) => {
+          return item.planet_id;
+        });
+        res.send(films_planets);
+      }
+    });
+  })
+  .post((req, res) => {
+    films_planets_dao.addFilmPlanet(req.params.id, req.body, (ok) => {
+      if (!ok) {
+        res.status(500).end();
+      } else {
+        console.log(ok.insertedId);
+        res.end();
+      }
+    });
+  });
 
 //start server
 const port = 3000;
