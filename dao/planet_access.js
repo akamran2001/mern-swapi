@@ -14,20 +14,43 @@ async function startup() {
 }
 startup();
 
-//retreive all books
-module.exports.findAllPlanets = function (callback) {
-  //let dataPromise = collection.find({}).toArray();
-  //dataPromise.then((books) => callback(books));
+//GET all planets
+module.exports.findAllPlanets = (callback) => {
+  let dataPromise = collection.find({}).toArray();
+  dataPromise.then((planets) => callback(planets));
 };
 
-// retrieve a single book
-module.exports.findPlanet = function (isbn, callback) {
-  //let dataPromise = collection.findOne({ isbn: isbn });
-  //dataPromise.then((book) => callback(book));
+// GET a single planet
+module.exports.findPlanet = (id, callback) => {
+  let dataPromise = collection.findOne({ id: parseInt(id) });
+  dataPromise.then((planet) => callback(planet));
 };
 
-// delete a single book
-module.exports.deletePlanet = function (isbn, callback) {
-  //let dataPromise = collection.deleteOne({ isbn: isbn });
-  //dataPromise.then((ok) => callback(ok));
+// DELETE a single planet
+module.exports.deletePlanet = function (id, callback) {
+  let dataPromise = collection.deleteOne({ id: parseInt(id) });
+  dataPromise.then((ok) => {
+    callback(ok);
+  });
+};
+
+//PUT a planet
+module.exports.updatePlanet = (id, planet, callback) => {
+  delete character._id;
+  let dataPromise = collection.updateOne(
+    { id: parseInt(id) },
+    { $set: character },
+    { upsert: true },
+    callback
+  );
+  dataPromise.then((ok) => {
+    callback(ok);
+  });
+};
+
+// POST a planet
+module.exports.addPlanet = (planet, callback) => {
+  delete planet._id;
+  let dataPromise = collection.insertOne(film);
+  dataPromise.then((ok) => callback(ok));
 };

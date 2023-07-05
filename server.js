@@ -3,7 +3,7 @@ const express = require("express");
 //Data access objects
 const film_dao = require("./dao/film_access");
 const character_dao = require("./dao/character_access");
-// const planet_dao = require("dao/planet_access");
+const planet_dao = require("./dao/planet_access");
 // const films_planets_dao = require("dao/films_planets");
 // const films_characters_dao = require("dao/films_characters");
 
@@ -101,7 +101,7 @@ app.delete("/api/characters/:id", (req, res) => {
 
 // PUT a character
 app.put("/api/characters/:id", (req, res) => {
-  film_dao.updateCharacter(req.params.id, req.body, (ok) => {
+  character_dao.updateCharacter(req.params.id, req.body, (ok) => {
     if (!ok) {
       res.status(404).end();
     } else {
@@ -113,6 +113,61 @@ app.put("/api/characters/:id", (req, res) => {
 // POST a character
 app.post("/api/characters", (req, res) => {
   character_dao.addCharacter(req.body, (ok) => {
+    if (!ok) {
+      res.status(500).end();
+    } else {
+      res.end();
+    }
+  });
+});
+
+// GET all planets
+app.get("/api/planets", (req, res) => {
+  planet_dao.findAllPlanets((planets) => {
+    if (!planets) {
+      res.status(404).end();
+    } else {
+      res.send(planets);
+    }
+  });
+});
+
+// GET single planet
+app.get("/api/planets/:id", (req, res) => {
+  planet_dao.findPlanet(req.params.id, (planets) => {
+    if (!planets) {
+      res.status(404).end();
+    } else {
+      res.send(planets);
+    }
+  });
+});
+
+// DELETE a character
+app.delete("/api/characters/:id", (req, res) => {
+  planet_dao.deletePlanet(req.params.id, (ok) => {
+    if (!ok) {
+      res.status(404).end();
+    } else {
+      res.end();
+    }
+  });
+});
+
+// PUT a character
+app.put("/api/characters/:id", (req, res) => {
+  planet_dao.updatePlanet(req.params.id, req.body, (ok) => {
+    if (!ok) {
+      res.status(404).end();
+    } else {
+      res.end();
+    }
+  });
+});
+
+// POST a character
+app.post("/api/characters", (req, res) => {
+  planet_dao.addPlanet(req.body, (ok) => {
     if (!ok) {
       res.status(500).end();
     } else {
