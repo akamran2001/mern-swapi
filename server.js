@@ -4,7 +4,7 @@ const express = require("express");
 const film_dao = require("./dao/film_access");
 const character_dao = require("./dao/character_access");
 const planet_dao = require("./dao/planet_access");
-// const films_planets_dao = require("dao/films_planets");
+const films_planets_dao = require("./dao/films_planets_access");
 const films_characters_dao = require("./dao/films_characters_access");
 
 const app = express();
@@ -143,8 +143,8 @@ app.get("/api/planets/:id", (req, res) => {
   });
 });
 
-// DELETE a character
-app.delete("/api/characters/:id", (req, res) => {
+// DELETE a planet
+app.delete("/api/planets/:id", (req, res) => {
   planet_dao.deletePlanet(req.params.id, (ok) => {
     if (!ok) {
       res.status(404).end();
@@ -154,8 +154,8 @@ app.delete("/api/characters/:id", (req, res) => {
   });
 });
 
-// PUT a character
-app.put("/api/characters/:id", (req, res) => {
+// PUT a planet
+app.put("/api/planets/:id", (req, res) => {
   planet_dao.updatePlanet(req.params.id, req.body, (ok) => {
     if (!ok) {
       res.status(404).end();
@@ -165,8 +165,8 @@ app.put("/api/characters/:id", (req, res) => {
   });
 });
 
-// POST a character
-app.post("/api/characters", (req, res) => {
+// POST a planet
+app.post("/api/planets", (req, res) => {
   planet_dao.addPlanet(req.body, (ok) => {
     if (!ok) {
       res.status(500).end();
@@ -175,6 +175,61 @@ app.post("/api/characters", (req, res) => {
     }
   });
 });
+
+// Films's planets
+app
+  .route("/api/films/:id/planets")
+  .get((req, res) => {
+    /*
+     * Respond with planet IDs
+     */
+    films_planets_dao.findAllFilmPlanets(req.params.id, (films_planets) => {
+      if (!films_planets) {
+        res.status(404).end();
+      } else {
+        films_planets = films_planets.map((item) => {
+          return item.planet_id;
+        });
+        res.send(films_planets);
+      }
+    });
+  })
+  .post((req, res) => {
+    films_planets_dao.addFilmPlanet(req.params.id, req.body, (ok) => {
+      if (!ok) {
+        res.status(500).end();
+      } else {
+        console.log(ok.insertedId);
+        res.end();
+      }
+    });
+  });
+
+// Planets films
+app
+  .route("/api/planets/:id/films")
+  .get((req, res) => {
+    films_planets_dao.findAllPlanetFilms(req.params.id, (planet_films) => {
+      if (!planet_films) {
+        res.status(404).end();
+      } else {
+        planet_films = planet_films.map((item) => {
+          return item.film_id;
+        });
+        res.send(planet_films);
+      }
+    });
+  })
+  .post((req, res) => {
+    films_planets_dao.addPlanetFilm(req.params.id, req.body, (ok) => {
+      if (!ok) {
+        res.status(500).end();
+      } else {
+        console.log(ok.insertedId);
+        res.end();
+      }
+    });
+  });
 
 // GET all characters for a film
 // Returns character id of the characters. Client should HTTP request
