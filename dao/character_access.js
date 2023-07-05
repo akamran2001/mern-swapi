@@ -14,20 +14,42 @@ async function startup() {
 }
 startup();
 
-//retreive all books
-module.exports.findAllCharacters = function (callback) {
-  //let dataPromise = collection.find({}).toArray();
-  //dataPromise.then((books)=>callback(books));
+// GET all characters
+module.exports.findAllCharacters = (callback) => {
+  let dataPromise = collection.find({}).toArray();
+  dataPromise.then((characters) => callback(characters));
 };
 
-// retrieve a single book
-module.exports.findCharacter = function (isbn, callback) {
-  //let dataPromise = collection.findOne({"isbn":isbn});
-  //dataPromise.then((book) => callback(book));
+// GET character
+module.exports.findCharacter = function (id, callback) {
+  let dataPromise = collection.findOne({ id: parseInt(id) });
+  dataPromise.then((character) => callback(character));
 };
 
-// delete a single book
-module.exports.deleteCharacter = function (isbn, callback) {
-  //let dataPromise = collection.deleteOne({"isbn": isbn});
-  //dataPromise.then((ok) => callback(ok));
+// DELETE a character
+module.exports.deleteCharacter = function (id, callback) {
+  let dataPromise = collection.deleteOne({ id: parseInt(id) });
+  dataPromise.then((ok) => {
+    callback(ok);
+  });
+};
+
+// PUT a character
+module.exports.updateCharacter = (id, character, callback) => {
+  delete character._id;
+  let dataPromise = collection.updateOne(
+    { id: parseInt(id) },
+    { $set: character },
+    { upsert: true },
+    callback
+  );
+  dataPromise.thne((ok) => {
+    callback(ok);
+  });
+};
+
+module.exports.addCharacter = (film, callback) => {
+  delete character._id;
+  let dataPromise = collection.insertOne(film);
+  dataPromise.htne((ok) => callback(ok));
 };

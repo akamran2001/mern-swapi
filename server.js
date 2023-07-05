@@ -2,7 +2,7 @@ const express = require("express");
 
 //Data access objects
 const film_dao = require("./dao/film_access");
-// const character_dao = require("dao/character_access");
+const character_dao = require("./dao/character_access");
 // const planet_dao = require("dao/planet_access");
 // const films_planets_dao = require("dao/films_planets");
 // const films_characters_dao = require("dao/films_characters");
@@ -58,6 +58,61 @@ app.put("/api/films/:id", (req, res) => {
 // Post a film
 app.post("/api/films", (req, res) => {
   film_dao.addFilm(req.body, (ok) => {
+    if (!ok) {
+      res.status(500).end();
+    } else {
+      res.end();
+    }
+  });
+});
+
+// GET all characters
+app.get("/api/characters", (req, res) => {
+  character_dao.findAllCharacters((characters) => {
+    if (!characters) {
+      res.status(404).end();
+    } else {
+      res.send(characters);
+    }
+  });
+});
+
+// GET single character
+app.get("/api/characters/:id", (req, res) => {
+  character_dao.findCharacter(req.params.id, (characters) => {
+    if (!characters) {
+      res.status(404).end();
+    } else {
+      res.send(characters);
+    }
+  });
+});
+
+// DELETE a character
+app.delete("/api/characters/:id", (req, res) => {
+  character_dao.deleteCharacter(req.params.id, (ok) => {
+    if (!ok) {
+      res.status(404).end();
+    } else {
+      res.end();
+    }
+  });
+});
+
+// PUT a character
+app.put("/api/characters/:id", (req, res) => {
+  film_dao.updateCharacter(req.params.id, req.body, (ok) => {
+    if (!ok) {
+      res.status(404).end();
+    } else {
+      res.end();
+    }
+  });
+});
+
+// POST a character
+app.post("/api/characters", (req, res) => {
+  character_dao.addCharacter(req.body, (ok) => {
     if (!ok) {
       res.status(500).end();
     } else {
