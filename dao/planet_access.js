@@ -27,7 +27,7 @@ module.exports.findPlanet = (id, callback) => {
 };
 
 // DELETE a single planet
-module.exports.deletePlanet = function (id, callback) {
+module.exports.deletePlanet = (id, callback) => {
   let dataPromise = collection.deleteOne({ id: parseInt(id) });
   dataPromise.then((ok) => {
     callback(ok);
@@ -36,10 +36,10 @@ module.exports.deletePlanet = function (id, callback) {
 
 //PUT a planet
 module.exports.updatePlanet = (id, planet, callback) => {
-  delete character._id;
+  delete planet._id;
   let dataPromise = collection.updateOne(
     { id: parseInt(id) },
-    { $set: character },
+    { $set: planet },
     { upsert: true },
     callback
   );
@@ -51,6 +51,6 @@ module.exports.updatePlanet = (id, planet, callback) => {
 // POST a planet
 module.exports.addPlanet = (planet, callback) => {
   delete planet._id;
-  let dataPromise = collection.insertOne(film);
+  let dataPromise = collection.insertOne(planet);
   dataPromise.then((ok) => callback(ok));
 };

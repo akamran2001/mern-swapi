@@ -5,7 +5,7 @@ const film_dao = require("./dao/film_access");
 const character_dao = require("./dao/character_access");
 const planet_dao = require("./dao/planet_access");
 const films_planets_dao = require("./dao/films_planets_access");
-// const films_characters_dao = require("dao/films_characters");
+const films_characters_dao = require("./dao/films_characters_access");
 
 const app = express();
 
@@ -230,6 +230,59 @@ app
       }
     });
   });
+
+// GET all characters for a film
+// Returns character id of the characters. Client should HTTP request
+// for character objects, subsequently.
+app.get("/api/films/:id/characters", (req, res) => {
+  films_characters_dao.findAllFilmCharacters(req.params.id, (characters) => {
+    if (!characters) {
+      res.status(404).end();
+    } else {
+      characters = characters.map((x) => {
+        return x.character_id;
+      });
+      res.send(characters);
+    }
+  });
+});
+
+// GET all films for a character
+// Returns film id of the films. Client should HTTP request
+// for film objects, subsequently.
+app.get("/api/characters/:id/films", (req, res) => {
+  films_characters_dao.findAllCharacterFilms(req.params.id, (films) => {
+    if (!films) {
+      res.status(404).end();
+    } else {
+      films = films.map((x) => {
+        return x.film_id;
+      });
+      res.send(films);
+    }
+  });
+});
+
+// POST a character <=> film association
+app.post("/api/films/:id/characters", (req, res) => {
+  films_characters_dao.addFilmCharacter(req.params.id, req.body, (ok) => {
+    if (!ok) {
+      res.status(404).end();
+    } else {
+      res.end();
+    }
+  });
+});
+// POST a character <=> film association
+app.post("/api/characters/:id/films", (req, res) => {
+  films_characters_dao.addCharacterFilm(req.params.id, req.body, (ok) => {
+    if (!ok) {
+      res.status(404).end();
+    } else {
+      res.end();
+    }
+  });
+});
 
 //start server
 const port = 3000;

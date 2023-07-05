@@ -21,13 +21,13 @@ module.exports.findAllCharacters = (callback) => {
 };
 
 // GET character
-module.exports.findCharacter = function (id, callback) {
+module.exports.findCharacter = (id, callback) => {
   let dataPromise = collection.findOne({ id: parseInt(id) });
   dataPromise.then((character) => callback(character));
 };
 
 // DELETE a character
-module.exports.deleteCharacter = function (id, callback) {
+module.exports.deleteCharacter = (id, callback) => {
   let dataPromise = collection.deleteOne({ id: parseInt(id) });
   dataPromise.then((ok) => {
     callback(ok);
@@ -48,8 +48,8 @@ module.exports.updateCharacter = (id, character, callback) => {
   });
 };
 
-module.exports.addCharacter = (film, callback) => {
+module.exports.addCharacter = (character, callback) => {
   delete character._id;
-  let dataPromise = collection.insertOne(film);
+  let dataPromise = collection.insertOne(character);
   dataPromise.then((ok) => callback(ok));
 };
