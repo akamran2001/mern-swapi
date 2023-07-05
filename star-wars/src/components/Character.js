@@ -19,10 +19,6 @@ export default function Character(props) {
   }, [props.id]);
   return (
     <div>
-      <Nav>
-        <Link to="/character">Character</Link>
-      </Nav>
-
       <h>Character {character.id}</h>
       <ul>
         <li>Name: {character.name}</li>

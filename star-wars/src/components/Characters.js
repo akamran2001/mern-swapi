@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Route, Routes, Navigate, Link } from "react-router-dom";
+import Character from "./Character";
 
 const getCharacters = async (url) => {
   const response = await fetch(url, {
@@ -19,10 +21,21 @@ export default function Characters() {
     <div>
       <ul>
         {characters.map((character) => {
-          return <div onClick={goToCharacterPage}>{character.name}</div>;
+          return (
+            <div>
+              <nav>
+                <Link to={`/character/${character.id}`}>{character.name}</Link>
+              </nav>
+              <Routes>
+                <Route
+                  path={`/character/${character.id}`}
+                  element={<Character id={character.id} />}
+                />
+              </Routes>
+            </div>
+          );
         })}
       </ul>
     </div>
   );
 }
-const goToCharacterPage = (id) => (window.location = `character/${id}`);

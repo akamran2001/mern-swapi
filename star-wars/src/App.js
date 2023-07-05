@@ -11,11 +11,10 @@ function App() {
     <div className="App">
       <nav>
         <Link to="/characters">Characters</Link>
-        <Link to="/character">Character</Link>
       </nav>
       <Routes>
         <Route path="/characters" element={<Characters />} />
-        <Route path="/character/" element={<Character id={1} />} />
+        <Route path="/character/:_id" element={<Character id={_id} />} />
       </Routes>
     </div>
   );
