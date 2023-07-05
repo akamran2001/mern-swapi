@@ -21,7 +21,7 @@ export default function Films() {
 
   return (
     <>
-      <div>Films</div>
+      <h3>Films</h3>
       <ul>
         {filmList.map((film) => {
           return (
