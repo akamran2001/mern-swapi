@@ -28,3 +28,21 @@ module.exports.addFilmPlanet = (film_id, film_planet, callback) => {
   });
   dataPromise.then((ok) => callback(ok));
 };
+
+// Retrieve all planet_films
+module.exports.findAllPlanetFilms = function (planet_id, callback) {
+  let dataPromise = collection
+    .find({
+      planet_id: parseInt(planet_id),
+    })
+    .toArray();
+  dataPromise.then((planet_films) => callback(planet_films));
+};
+
+module.exports.addPlanetFilm = (planet_id, planet_film, callback) => {
+  let dataPromise = collection.insertOne({
+    planet_id: parseInt(planet_id),
+    film_id: planet_film.film_id,
+  });
+  dataPromise.then((ok) => callback(ok));
+};

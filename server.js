@@ -205,6 +205,32 @@ app
     });
   });
 
+// Planets films
+app
+  .route("/api/planets/:id/films")
+  .get((req, res) => {
+    films_planets_dao.findAllPlanetFilms(req.params.id, (planet_films) => {
+      if (!planet_films) {
+        res.status(404).end();
+      } else {
+        planet_films = planet_films.map((item) => {
+          return item.film_id;
+        });
+        res.send(planet_films);
+      }
+    });
+  })
+  .post((req, res) => {
+    films_planets_dao.addPlanetFilm(req.params.id, req.body, (ok) => {
+      if (!ok) {
+        res.status(500).end();
+      } else {
+        console.log(ok.insertedId);
+        res.end();
+      }
+    });
+  });
+
 //start server
 const port = 3000;
 console.log(`http://localhost:${port}`);
