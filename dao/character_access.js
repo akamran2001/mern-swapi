@@ -43,7 +43,7 @@ module.exports.updateCharacter = (id, character, callback) => {
     { upsert: true },
     callback
   );
-  dataPromise.thne((ok) => {
+  dataPromise.then((ok) => {
     callback(ok);
   });
 };
@@ -51,5 +51,5 @@ module.exports.updateCharacter = (id, character, callback) => {
 module.exports.addCharacter = (film, callback) => {
   delete character._id;
   let dataPromise = collection.insertOne(film);
-  dataPromise.htne((ok) => callback(ok));
+  dataPromise.then((ok) => callback(ok));
 };
