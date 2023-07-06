@@ -15,12 +15,12 @@ const fetchPlanetFilms = async (planet_id) => {
     mode: "cors", // no-cors, *cors, same-origin
   };
   const response = await fetch(
-    `http://localhost:3000/api/planets/${planet_id}/films`,
+    `${process.env.REACT_APP_SERVER}/api/planets/${planet_id}/films`,
     init
   );
   let planet_films = await response.json();
   planet_films = planet_films.map((item) => {
-    return fetch(`http://localhost:3000/api/films/${item}`);
+    return fetch(`${process.env.REACT_APP_SERVER}/api/films/${item}`);
   });
   let responses = await Promise.all(planet_films);
   responses = responses.map((res) => res.json());
@@ -32,7 +32,9 @@ export default function Planet({ planet_id }) {
   const [planetFilms, setPlanetFilms] = useState([]);
 
   useEffect(() => {
-    fetchPlanet(`http://localhost:3000/api/planets/${planet_id}`).then((p) => {
+    fetchPlanet(
+      `${process.env.REACT_APP_SERVER}/api/planets/${planet_id}`
+    ).then((p) => {
       console.table(p);
       setPlanet(p);
     });

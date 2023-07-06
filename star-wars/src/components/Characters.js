@@ -14,8 +14,8 @@ export default function Characters() {
   const { id } = useParams();
   const [characters, setCharacters] = useState([]);
   useEffect(() => {
-    getCharacters("http://localhost:3000/api/characters").then((characters) =>
-      setCharacters(characters)
+    getCharacters(`${process.env.REACT_APP_SERVER}/api/characters`).then(
+      (characters) => setCharacters(characters)
     );
   }, []);
 

@@ -13,10 +13,12 @@ export default function Planets() {
   const [planetList, setPlanetList] = useState([]);
 
   useEffect(() => {
-    fetchPlanets("http://localhost:3000/api/planets").then((planets) => {
-      console.log(planets);
-      setPlanetList(planets);
-    });
+    fetchPlanets(`${process.env.REACT_APP_SERVER}/api/planets`).then(
+      (planets) => {
+        console.log(planets);
+        setPlanetList(planets);
+      }
+    );
   }, []);
 
   return (

@@ -13,7 +13,7 @@ export default function Films() {
   const [filmList, setFilmList] = useState([]);
 
   useEffect(() => {
-    fetchFilms("http://localhost:3000/api/films").then((films) => {
+    fetchFilms(`${process.env.REACT_APP_SERVER}/api/films`).then((films) => {
       console.log(films);
       setFilmList(films.sort((a, b) => a.episode_id - b.episode_id));
     });

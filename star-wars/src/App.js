@@ -3,12 +3,13 @@ import { Route, Routes, Navigate, Link } from "react-router-dom";
 import "./App.css";
 import Characters from "./components/Characters";
 import Character from "./components/Character";
-import Planets from "./Planets";
-import Planet from "./Planet";
-import Films from "./Films";
-import Film from "./Film";
+import Planets from "./components/Planets";
+import Planet from "./components/Planet";
+import Films from "./components/Films";
+import Film from "./components/Film";
 
 function App() {
+  console.log(Object.keys(process.env));
   return (
     <div className="App">
       <header className="App-header">

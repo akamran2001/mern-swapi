@@ -13,11 +13,11 @@ export default function Character(props) {
   const { id } = useParams();
   const [character, setCharacter] = useState([]);
   useEffect(() => {
-    getCharacter(`http://localhost:3000/api/characters/${props.id}`).then(
-      (character) => {
-        setCharacter(character);
-      }
-    );
+    getCharacter(
+      `${process.env.REACT_APP_SERVER}/api/characters/${props.id}`
+    ).then((character) => {
+      setCharacter(character);
+    });
   }, [props.id]);
   return (
     <div>
