@@ -8,11 +8,11 @@ app.use(cors());
 app.use(express.static("star-wars/build"));
 
 //Data access objects
-const film_dao = require("./dao/film_access");
-const character_dao = require("./dao/character_access");
-const planet_dao = require("./dao/planet_access");
-const films_planets_dao = require("./dao/films_planets_access");
-const films_characters_dao = require("./dao/films_characters_access");
+const film_dao = require("../dao/film_access");
+const character_dao = require("../dao/character_access");
+const planet_dao = require("../dao/planet_access");
+const films_planets_dao = require("../dao/films_planets_access");
+const films_characters_dao = require("../dao/films_characters_access");
 
 // Get all films
 app.get("/api/films", (req, res) => {
