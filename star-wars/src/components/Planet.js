@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const fetchPlanet = async (url) => {
   const response = await fetch(url, {
@@ -27,7 +28,8 @@ const fetchPlanetFilms = async (planet_id) => {
   return await Promise.all(responses);
 };
 
-export default function Planet({ planet_id }) {
+export default function Planet() {
+  const { planet_id } = useParams();
   const [planet, setPlanet] = useState({});
   const [planetFilms, setPlanetFilms] = useState([]);
 

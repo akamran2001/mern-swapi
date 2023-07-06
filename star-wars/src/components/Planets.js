@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const fetchPlanets = async (url) => {
   const response = await fetch(url, {
@@ -28,7 +29,7 @@ export default function Planets() {
         {planetList.map((planet) => {
           return (
             <li key={planet.id}>
-              <a href={`/planets/${planet.id}`}>{planet.name}</a>
+              <Link to={`/planets/${planet.id}`}>{planet.name}</Link>
             </li>
           );
         })}
